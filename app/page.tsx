@@ -1,8 +1,31 @@
 import Eventcard from "@/components/Eventcard";
 import ExploreBtn from "@/components/ExploreBtn";
-import events from "@/lib/constants";
 
-const Page = () => {
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+interface IEvent {
+  title: string;
+  slug: string;
+  description: string;
+  overview: string;
+  image: string;
+  venue: string;
+  location: string;
+  date: string;
+  time: string;
+  mode: string;
+  audience: string;
+  agenda: string[];
+  organizer: string;
+  tags: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const Page = async () => {
+  const response = await fetch(`${BASE_URL}/api/events`);
+  const { events } = await response.json();
+
   return (
     <section>
       <h1 className="text-center ">
@@ -18,11 +41,13 @@ const Page = () => {
         <h3>Featured Events</h3>
 
         <ul className="events list-none">
-          {events.map((event) => (
-            <li key={event.title}>
-              <Eventcard {...event} />
-            </li>
-          ))}
+          {events &&
+            events.length > 0 &&
+            events.map((event: IEvent) => (
+              <li key={event.title}>
+                <Eventcard {...event} />
+              </li>
+            ))}
         </ul>
       </div>
     </section>
