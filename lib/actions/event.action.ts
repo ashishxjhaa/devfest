@@ -4,7 +4,7 @@ import { prisma } from "@/db";
 
 export const getSimilarEventBySlug = async (slug: string) => {
   try {
-    const event = await prisma.event.findFirst({ where: { slug } });
+    const event = await prisma.event.findUnique({ where: { slug } });
 
     if (!event) return [];
 
