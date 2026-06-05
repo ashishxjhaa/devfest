@@ -29,6 +29,9 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
 
+    const tags = JSON.parse(formData.get("tags") as string);
+    const agenda = JSON.parse(formData.get("agenda") as string);
+
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
@@ -70,7 +73,13 @@ export async function POST(req: NextRequest) {
       .replace(/\s+/g, "-");
 
     const createdEvent = await prisma.event.create({
-      data: { ...parsed.data, slug, image: imageUrl },
+      data: {
+        ...parsed.data,
+        tags: tags,
+        agenda: agenda,
+        slug,
+        image: imageUrl,
+      },
     });
 
     return NextResponse.json(
