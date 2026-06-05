@@ -1,7 +1,7 @@
 import Eventcard from "@/components/Eventcard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { events } from "@/lib/constants";
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export interface IEvent {
   title: string;
@@ -43,7 +43,7 @@ const Page = async () => {
         <ul className="events list-none">
           {events &&
             events.length > 0 &&
-            events.map((event: IEvent) => (
+            events.map((event: any) => (
               <li key={event.title}>
                 <Eventcard {...event} />
               </li>
